@@ -1,2 +1,3 @@
-INVITADO1
-INVITADO2
+Nombre,dni,email,3
+Nombre2,dnil,email2,3
+Nombre3,dni2,email3,3

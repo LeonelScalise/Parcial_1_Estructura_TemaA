@@ -22,7 +22,7 @@ def clear(): return os.system('cls')
 
 
 class Persona:
-    def __init__(self, nombre_apellido, dni, sexo, fecha_nac):
+    def __init__(self, nombre_apellido, dni, sexo = None, fecha_nac = None):
         self.dni = dni
         self.nombre_apellido = nombre_apellido
         self.sexo = sexo
@@ -809,35 +809,53 @@ class Administrativo(Persona):
 
 class Invitado(Persona):
 
-    def __init__(self, nombre_apellido, dni, email):
+    def __init__(self, nombre_apellido, dni, email, cantidad_de_veces_que_ingresa):
         super().__init__(nombre_apellido, dni)
-        self.cantidad_de_veces_que_ingresa = 0
+        self.cantidad_de_veces_que_ingresa = cantidad_de_veces_que_ingresa
         self.email = email
 
     def menu_registro_invitado(institucion:Institucion):
         print("Menu Invitado\n")
 
-        #f = open("invitados.txt", "r")
-        #lista_invitados = f.readlines()
+        f = open("Proyecto/invitados.txt", "r")
 
+        info_invitados = f.readlines()
+        for invitado in info_invitados:
+          info_invitados = invitado.split(",")
+          invitado_creado = Invitado(info_invitados[0], info_invitados[1], info_invitados[2],int(info_invitados[3]))
+          ITBA.invitados.append(invitado_creado)
 
         nombre_apellido = input("Ingrese su nombre y apellido: ")
         dni = validadorDNIInvitado()
         email = validadorEmail()
-
-
-        invitado = Invitado(nombre_apellido, dni, email)
-
-
-        #f = open("invitados.txt", "a")
         
-        #f.write(f"\n Invitado {}: {nombre_apellido}")
+        for invitado in institucion.invitados:
+          invitado_localizado = False
+          if invitado.dni == dni and invitado.email == email:
+            invitado_localizado = invitado
+        
+
+          else:
+            self.cantidad_de_veces_que_ingresa = 0
+
+        
+        f.write(f"{invitado.nombre_apellido,invitado.dni,invitado.email,invitado.cantidad_de_veces_que_ingresa}")
+
+        f = open("invitados.txt", "a")
+        
+        
         clear()
         armado_menu(f"Bienvenido Invitado", ["Ver Estadisticas", "Volver"], ['', ''])
+    
+    def __str__(self):
+      return str(self.cantidad_de_veces_que_ingresa)
 
 
 if __name__=="__main__":
-      
-  f = open("invitados.txt", "r")
+  
+
+  f = open("Proyecto/invitados.txt", "r")
   lista_invitados = f.readlines()
   print(lista_invitados)
+
+  Invitado.menu_registro_invitado(ITBA)
