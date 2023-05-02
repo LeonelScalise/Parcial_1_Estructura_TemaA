@@ -15,6 +15,9 @@ class Institucion():
         self.tramites_resueltos = []
         self.tramites_abiertos = []
         self.historial_tramites = []
+        self.invitados = []
+        self.dni_invitados = []
+        self.DniMail = []
     
         
     
