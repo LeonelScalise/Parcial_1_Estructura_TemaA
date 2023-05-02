@@ -15,7 +15,7 @@ from validadorFecha import *
 from validadorAula import *
 from validadorDia import *
 from validadorHorario import *
-from validadorEmail import *
+from validadorEmailExistente import *
 
 
 def clear(): return os.system('cls')
@@ -827,7 +827,7 @@ class Invitado(Persona):
 
         nombre_apellido = input("Ingrese su nombre y apellido: ")
         dni = validadorDNIInvitado()
-        email = validadorEmail()
+        email = ""
         
         for invitado in institucion.invitados:
           invitado_localizado = False
@@ -836,7 +836,7 @@ class Invitado(Persona):
         
 
           else:
-            self.cantidad_de_veces_que_ingresa = 0
+            cantidad_de_veces_que_ingresa = 0
 
         
         f.write(f"{invitado.nombre_apellido,invitado.dni,invitado.email,invitado.cantidad_de_veces_que_ingresa}")
