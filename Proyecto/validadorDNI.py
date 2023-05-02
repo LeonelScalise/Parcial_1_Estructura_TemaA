@@ -32,6 +32,8 @@ def validadorDNIInvitado():
                 ITBA.dni_invitados.append(DNI)
                 ITBA.DniMail.append([])
                 inicio = False
+            else:
+                inicio = False
         except ValueError:
             print('\nEl dato introducido no corresponde al valor esperado.\n')
         except Exception as e:
