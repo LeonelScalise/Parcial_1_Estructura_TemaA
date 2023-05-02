@@ -3,7 +3,7 @@ import string
 
 
 
-def validadorEmail():
+def validadorEmailFormato():
     inicio = True
     patron = fr"^\s*[{{{string.ascii_lowercase}}}]+[@]{{1}}(itba){{1}}[.]{{1}}(edu){{1}}[.]{{1}}(ar){{1}}\s*$"
     while inicio:
