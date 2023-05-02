@@ -1,1 +1,4 @@
-10:59 - 12:32,  15:22-4:34
+if re.match(patron, "leONelscalise@itba.edu.ar".lower()) != None: 
+#     print(True)
+# else:
+#     print(False)
