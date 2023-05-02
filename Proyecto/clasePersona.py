@@ -15,7 +15,7 @@ from validadorFecha import *
 from validadorAula import *
 from validadorDia import *
 from validadorHorario import *
-from validadorEmail import *
+from validadorEmailExistente import *
 
 
 def clear(): return os.system('cls')
@@ -823,21 +823,21 @@ class Invitado(Persona):
 
         nombre_apellido = input("Ingrese su nombre y apellido: ")
         dni = validadorDNIInvitado()
-        email = validadorEmail()
+        email = validadorEmailExistente(dni)
 
 
         invitado = Invitado(nombre_apellido, dni, email)
 
 
-        #f = open("invitados.txt", "a")
+#         #f = open("invitados.txt", "a")
         
-        #f.write(f"\n Invitado {}: {nombre_apellido}")
-        clear()
-        armado_menu(f"Bienvenido Invitado", ["Ver Estadisticas", "Volver"], ['', ''])
+#         #f.write(f"\n Invitado {}: {nombre_apellido}")
+#         clear()
+#         armado_menu(f"Bienvenido Invitado", ["Ver Estadisticas", "Volver"], ['', ''])
 
 
-if __name__=="__main__":
+# if __name__=="__main__":
       
-  f = open("invitados.txt", "r")
-  lista_invitados = f.readlines()
-  print(lista_invitados)
+#   f = open("invitados.txt", "r")
+#   lista_invitados = f.readlines()
+#   print(lista_invitados)
