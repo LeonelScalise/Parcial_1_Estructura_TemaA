@@ -18,6 +18,7 @@ class Institucion():
         self.invitados = []
         self.dni_invitados = []
         self.DniMail = []
+        self.emailsAdmins= []
     
         
     

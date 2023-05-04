@@ -1,3 +1,5 @@
-Nombre,dni,email,3
-Nombre2,dnil,email2,3
-Nombre3,dni2,email3,3
+Ramoncito,41234567,ramoncito@itba.edu.ar,4
+Leo,42135678,lscalise@itba.edu.ar,2
+Mati,43214567,mdiaz@itba.edu.ar,1
+Fede,41324567,fnieddu@itba.edu.ar,2
+Leoncito,56738290,leoncito@itba.edu.ar,2

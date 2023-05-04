@@ -339,6 +339,16 @@ class Administrativo(Persona):
         dni = validadorDNI()
         fecha_nac = validadorFecha()
         sexo = validadorSexo()
+        flag=True
+        while flag:
+            email=validadorEmailFormato()
+            if email not in ITBA.emailsAdmins:
+                ITBA.emailsAdmins.append(email)
+                flag=False
+            else:
+                print("El email ya esta asignado a un administrativo, ingrese otro")
+        contraseña=input("Ingrese una contraseña: ")
+
         if len(ITBA.legajos_administrativos) != 0:
             legajo_numero = int(ITBA.legajos_administrativos[-1][2:])+1
             legajo_alfa = "AD"
@@ -347,25 +357,41 @@ class Administrativo(Persona):
             legajo = "AD10000"
         fecha_ingreso = datetime.strptime(
             datetime.today().strftime('%d/%m/%Y'), '%d/%m/%Y')
-
         institucion.administrativos.append(Administrativo(
-            nombre_apellido, dni, sexo, fecha_nac, legajo, fecha_ingreso))
+            nombre_apellido, dni, sexo, fecha_nac, legajo, fecha_ingreso,email,contraseña))
         institucion.legajos_administrativos.append(legajo)
         clear()
         print(
             f'El administrativo {nombre_apellido} se ha creado correctamente')
+        print(ITBA.administrativos[-1].contraseña)
 
     def menu_registro_administrativo(institucion: Institucion):
-        x = "o"
-        legajo_ingresado = validadorLegajoAdminyProf(institucion)
-        clear()
-        for admin in institucion.administrativos:
-            if admin.legajo == legajo_ingresado:
-                if admin.sexo == "F":
-                    x = "a"
-                return armado_menu(f"Bienvenid{x} {admin.nombre_apellido}", ["Dar de alta alumno", "Dar de baja alumno", "Dar de alta profesor", "Dar de baja profesor", "Dar de baja Administrativo", "Tramites", "Crear Comisión", "Asignar profesor a materia", "Desasignar profesor a materia", "Estadisticas", "Volver"], [lambda: admin.altaAlumno(), lambda: admin.bajaAlumno(), lambda: admin.altaProfesor(), lambda: admin.bajaProfesor(), lambda: admin.bajaAdministrativo(), lambda: admin.displayTramiteActivo(), lambda:admin.crearComision(), lambda: admin.asignarProfesor(), lambda: admin.desasignarProfesor(), lambda: admin.estadisticasGenerales()])
+        inicio=True
+        c=0
+        while inicio:
+                
+            x = "o"
+            if c == 0:
 
-    def __init__(self, nombre_apellido, dni, sexo, fecha_nac, legajo, fecha_ingreso, fecha_baja=None):
+                legajo_ingresado = validadorLegajoAdminyProf(institucion)
+                
+            contra=input("Ingrese su contraseña: ")
+
+            clear()
+            for admin in institucion.administrativos:
+                if admin.legajo == legajo_ingresado and admin.contraseña==contra:
+                    if admin.sexo == "F":
+                        x = "a"
+                    return armado_menu(f"Bienvenid{x} {admin.nombre_apellido}", ["Dar de alta alumno", "Dar de baja alumno", "Dar de alta profesor", "Dar de baja profesor", "Dar de baja Administrativo", "Tramites", "Crear Comisión", "Asignar profesor a materia", "Desasignar profesor a materia", "Estadisticas","Cambiar Contraseña", "Volver"], [lambda: admin.altaAlumno(), lambda: admin.bajaAlumno(), lambda: admin.altaProfesor(), lambda: admin.bajaProfesor(), lambda: admin.bajaAdministrativo(), lambda: admin.displayTramiteActivo(), lambda:admin.crearComision(), lambda: admin.asignarProfesor(), lambda: admin.desasignarProfesor(), lambda: admin.estadisticasGenerales(),lambda : admin.actualizarContraseña()])
+                elif admin.legajo == legajo_ingresado:
+                    print("La contraseña es incorrecta\n")
+                    print("\n1. Reintentar\n2. Volver")
+                    opcion_elegida=validador(2)
+                    if opcion_elegida == 2:
+                        inicio=False
+            c+=1
+
+    def __init__(self, nombre_apellido, dni, sexo, fecha_nac, legajo, fecha_ingreso,email,contraseña, fecha_baja=None):
         super().__init__(nombre_apellido, dni, sexo, fecha_nac)
         self.legajo = legajo
         self.fecha_ingreso = fecha_ingreso
@@ -373,6 +399,8 @@ class Administrativo(Persona):
         self.fecha_baja = fecha_baja
         self.tramites_abiertos = []
         self.tramites_resueltos = []
+        self.email=email
+        self.contraseña=contraseña
 
     def asignarProfesor(self):
         contador = 0
@@ -746,11 +774,12 @@ class Administrativo(Persona):
                 print(
                     f"La comision {nueva_comision.codigo_comision} de {materia_elegida.nombre} fue creada correctamente ")
 
-    def estadisticasGenerales(self):
-        armado_menu("ESTADISTICAS GENERALES", ['Alumnos actuales por carrera', 'Rendimiento Alumno', "Volver"], [
-                    lambda: self.alumnosActualesxCarrera(), lambda: self.histogramaNotasFinalesAlumno()])
+    def estadisticasGenerales():
 
-    def alumnosActualesxCarrera(self):
+        armado_menu("ESTADISTICAS GENERALES", ['Alumnos actuales por carrera', 'Rendimiento Alumno', "Volver"], [
+                    lambda: Administrativo.alumnosActualesxCarrera(), lambda: Administrativo.histogramaNotasFinalesAlumno()])
+
+    def alumnosActualesxCarrera():
         alumnos = []
         carreras = []
         for carrera in ITBA.carreras:
@@ -763,7 +792,7 @@ class Administrativo(Persona):
         plt.title(label="Alumnos por Carrera")
         plt.show()
 
-    def histogramaNotasFinalesAlumno(self):
+    def histogramaNotasFinalesAlumno():
         legajo_alumno = validadorLegajoAlumnos(ITBA)
         for alumno in ITBA.alumnos:
             if alumno.legajo == legajo_alumno:
@@ -789,23 +818,9 @@ class Administrativo(Persona):
         plt.ylabel("Frecuencia")
         plt.show()
 
-
-# if __name__=="__main__":
-#   m_ainscrib={"Dia":["Martes","Viernes"],"Horario":["12:30-14:00","15:00-18:00"]}
-#   m_inscripto={"Dia":["Martes","Viernes"],"Horario":["13:30-14:00","14:00-19:00"]}
-#   if len(m_ainscrib["Dia"])>1:
-#     i_dia_ainscrib=0
-#     i_dia_inscripto=0
-#     for dia_ainscrib in m_ainscrib["Dia"]:
-#       for dia_inscripto in m_inscripto["Dia"]:
-#         if dia_ainscrib==dia_inscripto:
-#           if m_ainscrib["Horario"][i_dia_ainscrib]
-
-
-#         i_dia_inscripto+=1
-
-
-#       i_dia_ainscrib+=1
+    def actualizarContraseña(self):
+        contraseña_nueva=input("Ingrese su contraseña nueva: ")
+        self.contraseña=contraseña_nueva
 
 class Invitado(Persona):
 
@@ -816,30 +831,83 @@ class Invitado(Persona):
 
     def registro_invitado(institucion:Institucion):
 
-    #     f = open("Proyecto/invitados.txt", "r")
+        f = open("Proyecto/invitados.txt", "r")
 
-    #     info_invitados = f.readlines()
-    #     for invitado in info_invitados:
-    #       info_invitados = invitado.split(",")
-    #       invitado_creado = Invitado(info_invitados[0], info_invitados[1], info_invitados[2],int(info_invitados[3]))
-    #       ITBA.invitados.append(invitado_creado)
+        info_invitados = f.readlines()
+        if len(info_invitados)!= 0:
+            for invitado in info_invitados:
+                info_invitados = invitado.split(",")
+                invitado_creado = Invitado(info_invitados[0], int(info_invitados[1]), info_invitados[2],int(info_invitados[3]))
+                institucion.invitados.append(invitado_creado)
 
-        nombre_apellido = input("Ingrese su nombre y apellido: ")
-        dni = validadorDNIInvitado()
-        email = validadorEmailExistente(dni)
+            dni = validadorDNIInvitado()
+            email = validadorEmailExistente(dni)
+
+            invitado_localizado = False
+
+            for invitado in institucion.invitados:
+                if invitado.dni == dni and invitado.email == email:
+                    invitado_localizado = invitado
         
-        # for invitado in institucion.invitados:
-        #   invitado_localizado = False
-        #   if invitado.dni == dni and invitado.email == email:
-        #     invitado_localizado = invitado
-        
-        if invitado_localizado == False:
-            invitado_creado = Invitado(nombre_apellido,dni,email,1)
-            return invitado_creado
+            if invitado_localizado == False:
+                print("\n\t\tUSTED NUNCA HA INGRESADO\n")
+                nombre_apellido = input("Por ser la primera vez, proveanos su nombre y apellido: ")
+                invitado_creado = Invitado(nombre_apellido,dni,email,1)
+                ITBA.invitados.append(invitado_creado)
+            # return invitado_creado
+            else:
+                invitado_localizado.cantidad_de_veces_que_ingresa += 1
+
+
+
         else:
-            invitado_localizado.cantidad_de_veces_que_ingresa += 1
-            return invitado_localizado
-          
+            print("\n\t\tUSTED NUNCA HA INGRESADO\n")
+            dni = validadorDNIInvitado()
+            email = validadorEmailExistente(dni)
+            nombre_apellido = input("Por ser la primera vez, proveanos su nombre y apellido: ")
+            invitado_creado = Invitado(nombre_apellido,dni,email,1)
+            ITBA.invitados.append(invitado_creado)
+
+        f.close()
+
+        
+        print("\n\t\t MENU INVITADO \n")
+        opciones=["Ver Estadisticas", "Cerrar Sesión"]
+        contador=0
+        flag=True
+        while flag:
+            for opcion in opciones:
+                contador += 1
+                print(f"{contador}. {opcion}")
+
+            opcion_elegida = validador(contador)
+            clear()
+            if opcion_elegida == contador:
+                Invitado.logOutInvitados(ITBA)
+                flag = False
+            else:
+                Administrativo.estadisticasGenerales()
+                contador=0
+    
+            # return invitado_localizado
+
+    def logOutInvitados(institucion:Institucion):
+
+        f=open("Proyecto/invitados.txt","w")
+        len_invitados=len(institucion.invitados)
+        c=0
+        for invitado in institucion.invitados:
+            if c != len_invitados:
+                f.write(f"{invitado.nombre_apellido},{invitado.dni},{invitado.email},{invitado.cantidad_de_veces_que_ingresa}\n")
+                c+=1
+            else:
+                f.write(f"{invitado.nombre_apellido},{invitado.dni},{invitado.email},{invitado.cantidad_de_veces_que_ingresa}")
+        
+        f.close()
+
+            
+
+
         
     
     def __str__(self):
@@ -854,3 +922,9 @@ class Invitado(Persona):
   # print(lista_invitados)
 
   # Invitado.menu_registro_invitado(ITBA)
+
+
+# Ramoncito,41234567,ramoncito@itba.edu.ar,3
+# Leo,42135678,lscalise@itba.edu.ar,2
+# Mati,43214567,mdiaz@itba.edu.ar,1
+# Fede,41324567,fnieddu@itba.edu.ar,2

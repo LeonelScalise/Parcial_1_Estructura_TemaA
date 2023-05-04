@@ -20,7 +20,7 @@ def menu_principal():
         elif arranque == 3:
             armado_menu("MENU PROFESOR", ["Iniciar Sesion", "Salir"], [lambda : Profesor.menu_registro_profesor(ITBA)])
         elif arranque == 4:
-            armado_menu("MENU INVITADO", ["Ingresar", "Salir"], [lambda : Invitado.menu_registro_invitado(ITBA)])
+            armado_menu("MENU INVITADO", ["Ingresar", "Salir"], [lambda : Invitado.registro_invitado(ITBA)])
         elif arranque == 5:
             inicio = False
                        

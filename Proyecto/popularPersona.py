@@ -37,7 +37,7 @@ ITBA.agregar_alumno(alumno9)
 
 Girafa = Profesor("Profe Girafale", "23123141", "M", "12/12/12", "PR10000", "11/12/12")  #(nombre_apellido, dni, sexo, fecha_nac, legajo, fecha_ingreso, fecha_baja=None, comisiones_acargo=None
 
-ElAdmin = Administrativo("El Admin","41741232","M","fecha","AD10000","FECHA INGRESO")  # nombre_apellido, dni, sexo, fecha_nac, legajo, fecha_ingreso, tramites_abiertos, tramites_resueltos, fecha_baja=None
+ElAdmin = Administrativo("El Admin","41741232","M","fecha","AD10000","FECHA INGRESO","girafa@itba.edu.ar","contraseña")  # nombre_apellido, dni, sexo, fecha_nac, legajo, fecha_ingreso, tramites_abiertos, tramites_resueltos, fecha_baja=None
 
 Analisis_matematico = Materia("55.22", "Analisis matematico", 3, "SDT", "Matematica")
 Algebra = Materia("67.30", "Algebra", 6, "SDF", "Matematica")
