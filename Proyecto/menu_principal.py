@@ -14,13 +14,13 @@ def menu_principal():
         arranque = validador(5)
         clear()
         if arranque == 1:
-            armado_menu("MENU ADMINISTRATIVO", ["Dar alta administrativo", "Iniciar sesion", "Salir"], [lambda : Administrativo.altaAdministrativo(ITBA), lambda : Administrativo.menu_registro_administrativo(ITBA)])
+            armado_menu("MENU ADMINISTRATIVO", ["Dar alta administrativo", "Iniciar sesion", "Volver"], [lambda : Administrativo.altaAdministrativo(ITBA), lambda : Administrativo.menu_registro_administrativo(ITBA)])
         elif arranque == 2:
-            armado_menu("MENU ALUMNO", ["Iniciar Sesion", "Salir"], [lambda : Alumno.menu_registro_alumno(ITBA)])
+            armado_menu("MENU ALUMNO", ["Iniciar Sesion", "Volver"], [lambda : Alumno.menu_registro_alumno(ITBA)])
         elif arranque == 3:
-            armado_menu("MENU PROFESOR", ["Iniciar Sesion", "Salir"], [lambda : Profesor.menu_registro_profesor(ITBA)])
+            armado_menu("MENU PROFESOR", ["Iniciar Sesion", "Volver"], [lambda : Profesor.menu_registro_profesor(ITBA)])
         elif arranque == 4:
-            armado_menu("MENU INVITADO", ["Ingresar", "Salir"], [lambda : Invitado.registro_invitado(ITBA)])
+            armado_menu("MENU INVITADO", ["Ingresar", "Volver"], [lambda : Invitado.registro_invitado(ITBA)])
         elif arranque == 5:
             inicio = False
                        

@@ -1,5 +1,2 @@
-Ramoncito,41234567,ramoncito@itba.edu.ar,4
-Leo,42135678,lscalise@itba.edu.ar,2
-Mati,43214567,mdiaz@itba.edu.ar,1
-Fede,41324567,fnieddu@itba.edu.ar,2
-Leoncito,56738290,leoncito@itba.edu.ar,2
+Leoncito,12345678,leoncito@itba.edu.ar,3
+Mati,23456789,mati@itba.edu.ar,1
