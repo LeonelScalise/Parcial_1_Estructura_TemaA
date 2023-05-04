@@ -814,8 +814,7 @@ class Invitado(Persona):
         self.cantidad_de_veces_que_ingresa = cantidad_de_veces_que_ingresa
         self.email = email
 
-    def menu_registro_invitado(institucion:Institucion):
-    #     print("Menu Invitado\n")
+    def registro_invitado(institucion:Institucion):
 
     #     f = open("Proyecto/invitados.txt", "r")
 
@@ -834,18 +833,14 @@ class Invitado(Persona):
         #   if invitado.dni == dni and invitado.email == email:
         #     invitado_localizado = invitado
         
-
-        #   else:
-        #     cantidad_de_veces_que_ingresa = 0
-
+        if invitado_localizado == False:
+            invitado_creado = Invitado(nombre_apellido,dni,email,1)
+            return invitado_creado
+        else:
+            invitado_localizado.cantidad_de_veces_que_ingresa += 1
+            return invitado_localizado
+          
         
-        # f.write(f"{invitado.nombre_apellido,invitado.dni,invitado.email,invitado.cantidad_de_veces_que_ingresa}")
-
-        # f = open("invitados.txt", "a")
-        
-        
-        clear()
-        armado_menu(f"Bienvenido Invitado", ["Ver Estadisticas", "Volver"], ['', ''])
     
     def __str__(self):
       return str(self.cantidad_de_veces_que_ingresa)
