@@ -815,33 +815,33 @@ class Invitado(Persona):
         self.email = email
 
     def menu_registro_invitado(institucion:Institucion):
-        print("Menu Invitado\n")
+    #     print("Menu Invitado\n")
 
-        f = open("Proyecto/invitados.txt", "r")
+    #     f = open("Proyecto/invitados.txt", "r")
 
-        info_invitados = f.readlines()
-        for invitado in info_invitados:
-          info_invitados = invitado.split(",")
-          invitado_creado = Invitado(info_invitados[0], info_invitados[1], info_invitados[2],int(info_invitados[3]))
-          ITBA.invitados.append(invitado_creado)
+    #     info_invitados = f.readlines()
+    #     for invitado in info_invitados:
+    #       info_invitados = invitado.split(",")
+    #       invitado_creado = Invitado(info_invitados[0], info_invitados[1], info_invitados[2],int(info_invitados[3]))
+    #       ITBA.invitados.append(invitado_creado)
 
         nombre_apellido = input("Ingrese su nombre y apellido: ")
         dni = validadorDNIInvitado()
-        email = ""
+        email = validadorEmailExistente(dni)
         
-        for invitado in institucion.invitados:
-          invitado_localizado = False
-          if invitado.dni == dni and invitado.email == email:
-            invitado_localizado = invitado
+        # for invitado in institucion.invitados:
+        #   invitado_localizado = False
+        #   if invitado.dni == dni and invitado.email == email:
+        #     invitado_localizado = invitado
         
 
-          else:
-            cantidad_de_veces_que_ingresa = 0
+        #   else:
+        #     cantidad_de_veces_que_ingresa = 0
 
         
-        f.write(f"{invitado.nombre_apellido,invitado.dni,invitado.email,invitado.cantidad_de_veces_que_ingresa}")
+        # f.write(f"{invitado.nombre_apellido,invitado.dni,invitado.email,invitado.cantidad_de_veces_que_ingresa}")
 
-        f = open("invitados.txt", "a")
+        # f = open("invitados.txt", "a")
         
         
         clear()
@@ -851,11 +851,11 @@ class Invitado(Persona):
       return str(self.cantidad_de_veces_que_ingresa)
 
 
-if __name__=="__main__":
+# if __name__=="__main__":
   
 
-  f = open("Proyecto/invitados.txt", "r")
-  lista_invitados = f.readlines()
-  print(lista_invitados)
+  # f = open("Proyecto/invitados.txt", "r")
+  # lista_invitados = f.readlines()
+  # print(lista_invitados)
 
-  Invitado.menu_registro_invitado(ITBA)
+  # Invitado.menu_registro_invitado(ITBA)
