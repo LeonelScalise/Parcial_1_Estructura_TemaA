@@ -832,13 +832,27 @@ class Invitado(Persona):
     def registro_invitado(institucion:Institucion):
 
         f = open("Proyecto/invitados.txt", "r")
-
-        info_invitados = f.readlines()
-        if len(info_invitados)!= 0:
-            for invitado in info_invitados:
+        emails_por_dni=[]
+        dni_vistos=[]
+        lista_invitados = f.readlines()
+        if len(lista_invitados)!= 0:
+            for invitado in lista_invitados:
                 info_invitados = invitado.split(",")
-                invitado_creado = Invitado(info_invitados[0], int(info_invitados[1]), info_invitados[2],int(info_invitados[3]))
-                institucion.invitados.append(invitado_creado)
+                invitado_creado = Invitado(info_invitados[0],int(info_invitados[1]), info_invitados[2],int(info_invitados[3]))
+                if invitado_creado not in institucion.invitados:
+                    institucion.invitados.append(invitado_creado)
+                    institucion.dni_invitados.append(invitado_creado.dni)
+            for dni in institucion.dni_invitados:
+                for invitado in institucion.invitados:
+                    dni_vistos.append(invitado.dni)
+                    if invitado.dni == dni and invitado.dni not in dni_vistos:
+                        emails_por_dni.append(invitado.email)
+                        print(emails_por_dni)
+                print(emails_por_dni)
+                if emails_por_dni != []:
+                    ITBA.DniMail.append(emails_por_dni)
+                emails_por_dni=[]
+
 
             dni = validadorDNIInvitado()
             email = validadorEmailExistente(dni)
@@ -854,6 +868,7 @@ class Invitado(Persona):
                 nombre_apellido = input("Por ser la primera vez, proveanos su nombre y apellido: ")
                 invitado_creado = Invitado(nombre_apellido,dni,email,1)
                 ITBA.invitados.append(invitado_creado)
+
             # return invitado_creado
             else:
                 invitado_localizado.cantidad_de_veces_que_ingresa += 1
@@ -904,8 +919,6 @@ class Invitado(Persona):
                 f.write(f"{invitado.nombre_apellido},{invitado.dni},{invitado.email},{invitado.cantidad_de_veces_que_ingresa}")
         
         f.close()
-
-            
 
 
         
