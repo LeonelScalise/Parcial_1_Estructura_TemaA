@@ -843,8 +843,6 @@ class Invitado(Persona):
                 if invitado_creado not in institucion.invitados:
                     institucion.invitados.append(invitado_creado)
                     institucion.DniMail[institucion.dni_invitados.index(invitado_creado.dni)].append(invitado_creado.email)
-            
-            print(institucion.DniMail)
 
 
             dni = validadorDNIInvitado()
@@ -861,6 +859,7 @@ class Invitado(Persona):
                 nombre_apellido = input("Por ser la primera vez, proveanos su nombre y apellido: ")
                 invitado_creado = Invitado(nombre_apellido,dni,email,1)
                 institucion.invitados.append(invitado_creado)
+                clear()
 
             else:
                 invitado_localizado.cantidad_de_veces_que_ingresa += 1
