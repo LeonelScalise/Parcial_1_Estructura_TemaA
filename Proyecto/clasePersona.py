@@ -875,7 +875,6 @@ class Invitado(Persona):
             ITBA.invitados.append(invitado_creado)
 
         f.close()
-
         
         print("\n\t\t MENU INVITADO \n")
         opciones = ["Ver Estadisticas", "Cerrar Sesión"]
@@ -895,7 +894,6 @@ class Invitado(Persona):
                 Administrativo.estadisticasGenerales()
                 contador = 0
     
-            # return invitado_localizado
 
     def __eq__(self, __value) -> bool:
         return self.nombre_apellido == __value.nombre_apellido and self.dni == __value.dni and self.email == __value.email
@@ -917,19 +915,3 @@ class Invitado(Persona):
     
     def __str__(self):
       return str(self.cantidad_de_veces_que_ingresa)
-
-
-# if __name__=="__main__":
-  
-
-  # f = open("Proyecto/invitados.txt", "r")
-  # lista_invitados = f.readlines()
-  # print(lista_invitados)
-
-  # Invitado.menu_registro_invitado(ITBA)
-
-
-# Ramoncito,41234567,ramoncito@itba.edu.ar,3
-# Leo,42135678,lscalise@itba.edu.ar,2
-# Mati,43214567,mdiaz@itba.edu.ar,1
-# Fede,41324567,fnieddu@itba.edu.ar,2
