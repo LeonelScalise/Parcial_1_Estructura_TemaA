@@ -12,6 +12,7 @@ def validadorEmailExistente(dni):
         for elemento in ITBA.DniMail:
             matriz_sin_columna_indicada.append(elemento)
         print(ITBA.dni_invitados)
+        print(ITBA.DniMail)
         for i in range(len(ITBA.dni_invitados)):
             if dni == ITBA.dni_invitados[i]:
                 posicion_de_columna = i

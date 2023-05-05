@@ -1,4 +1,1 @@
-fede,41414141,f@itba.edu.ar,3
-Fede,41414141,fede@itba.edu.ar,1
-Fede,41414141,fnieddu@itba.edu.ar,1
-Leoncito,12345678,leoncito@itba.edu.ar,1
+Leonel Scalise,43046873,lscalise@itba.edu.ar,1

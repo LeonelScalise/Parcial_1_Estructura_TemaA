@@ -832,47 +832,38 @@ class Invitado(Persona):
     def registro_invitado(institucion:Institucion):
 
         f = open("Proyecto/invitados.txt", "r")
-        emails_por_dni=[]
-        dni_vistos=[]
         lista_invitados = f.readlines()
-        if len(lista_invitados)!= 0:
+        if len(lista_invitados) != 0:
             for invitado in lista_invitados:
                 info_invitados = invitado.split(",")
                 invitado_creado = Invitado(info_invitados[0],int(info_invitados[1]), info_invitados[2],int(info_invitados[3]))
+                if invitado_creado.dni not in institucion.dni_invitados:
+                    institucion.dni_invitados.append(invitado_creado.dni)
+                    institucion.DniMail.append([])
                 if invitado_creado not in institucion.invitados:
                     institucion.invitados.append(invitado_creado)
-                    institucion.dni_invitados.append(invitado_creado.dni)
-            for dni in institucion.dni_invitados:
-                for invitado in institucion.invitados:
-                    dni_vistos.append(invitado.dni)
-                    if invitado.dni == dni and invitado.dni not in dni_vistos:
-                        emails_por_dni.append(invitado.email)
-                        print(emails_por_dni)
-                print(emails_por_dni)
-                if emails_por_dni != []:
-                    ITBA.DniMail.append(emails_por_dni)
-                emails_por_dni=[]
+                    institucion.DniMail[institucion.dni_invitados.index(invitado_creado.dni)].append(invitado_creado.email)
+            
+            print(institucion.DniMail)
 
 
             dni = validadorDNIInvitado()
             email = validadorEmailExistente(dni)
 
-            invitado_localizado = False
+            invitado_localizado = None
 
             for invitado in institucion.invitados:
                 if invitado.dni == dni and invitado.email == email:
                     invitado_localizado = invitado
         
-            if invitado_localizado == False:
+            if invitado_localizado is None:
                 print("\n\t\tUSTED NUNCA HA INGRESADO\n")
                 nombre_apellido = input("Por ser la primera vez, proveanos su nombre y apellido: ")
                 invitado_creado = Invitado(nombre_apellido,dni,email,1)
-                ITBA.invitados.append(invitado_creado)
+                institucion.invitados.append(invitado_creado)
 
-            # return invitado_creado
             else:
                 invitado_localizado.cantidad_de_veces_que_ingresa += 1
-
 
 
         else:
@@ -887,9 +878,9 @@ class Invitado(Persona):
 
         
         print("\n\t\t MENU INVITADO \n")
-        opciones=["Ver Estadisticas", "Cerrar Sesión"]
-        contador=0
-        flag=True
+        opciones = ["Ver Estadisticas", "Cerrar Sesión"]
+        contador = 0
+        flag = True
         while flag:
             for opcion in opciones:
                 contador += 1
@@ -902,26 +893,27 @@ class Invitado(Persona):
                 flag = False
             else:
                 Administrativo.estadisticasGenerales()
-                contador=0
+                contador = 0
     
             # return invitado_localizado
+
+    def __eq__(self, __value) -> bool:
+        return self.nombre_apellido == __value.nombre_apellido and self.dni == __value.dni and self.email == __value.email
 
     def logOutInvitados(institucion:Institucion):
 
         f=open("Proyecto/invitados.txt","w")
         len_invitados=len(institucion.invitados)
-        c=0
+        c = 1
         for invitado in institucion.invitados:
             if c != len_invitados:
                 f.write(f"{invitado.nombre_apellido},{invitado.dni},{invitado.email},{invitado.cantidad_de_veces_que_ingresa}\n")
-                c+=1
+                c += 1
             else:
                 f.write(f"{invitado.nombre_apellido},{invitado.dni},{invitado.email},{invitado.cantidad_de_veces_que_ingresa}")
         
         f.close()
 
-
-        
     
     def __str__(self):
       return str(self.cantidad_de_veces_que_ingresa)
